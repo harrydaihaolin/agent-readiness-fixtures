@@ -32,6 +32,24 @@ jobs:
       matrix: ${{ fromJson(needs.list.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: make test
       - run: |
           test -d "fixtures/${{ matrix.fixture }}"
           ls "fixtures/${{ matrix.fixture }}"
+
+  self-scan:
+    runs-on: ubuntu-latest
+    needs: list
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install --upgrade agent-readiness
+      # Fixtures intentionally contain failure samples; we use a lower
+      # bar than the 95 baseline used in product repos.
+      - run: agent-readiness scan . --fail-below 60

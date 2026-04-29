@@ -1,0 +1,5 @@
+{
+  "name": "agent-readiness-fixtures",
+  "image": "mcr.microsoft.com/devcontainers/python:3.12",
+  "postCreateCommand": "echo 'Pure data repo: nothing to install.'"
+}

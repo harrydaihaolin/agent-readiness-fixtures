@@ -19,5 +19,5 @@ We'd reject:
 - [ ] Fixture lives at `fixtures/<descriptive-name>/`.
 - [ ] Added a stanza to `manifest.toml`.
 - [ ] Bumped `pack_version` (semver).
-- [ ] No real secrets (use `AKIAIOSFODNN7EXAMPLE` and friends).
+- [ ] No real secrets (use the documented placeholder pattern, with `AKIA` separated from the suffix to keep secret-scanners happy in docs: `AKIA-IOSFODNN7-EXAMPLE` in prose; the *unbroken* literal lives only inside `fixtures/broken/`).
 - [ ] Files under fixture are smaller than 50 KB each (this is a fixture pack, not a corpus).

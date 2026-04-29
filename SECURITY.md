@@ -16,5 +16,7 @@ downstream repo.
 ## Note on `broken/` fixture
 
 The `broken/` fixture deliberately includes example-only secret patterns
-like `AKIAIOSFODNN7EXAMPLE` so the `secrets.basic_scan` check fires.
-These are documented placeholders, not real credentials.
+(an AWS-shaped placeholder, written here as `AKIA-IOSFODNN7-EXAMPLE` so
+secret-scanners don't trip on prose) so the `secrets.basic_scan` check
+fires. These are documented placeholders, not real credentials. The
+unbroken literal lives **only** inside `fixtures/broken/`.

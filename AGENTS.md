@@ -27,4 +27,6 @@ nothing to install, no tests beyond the self-scan.
 - Each fixture stays small (~10 files). The point is to be readable in
   one sitting; large fixtures defeat the purpose.
 - No real secrets, no real third-party tokens. The `broken/` fixture
-  uses dummy patterns like `AKIAIOSFODNN7EXAMPLE`.
+  uses dummy patterns; the *literal* AWS-shaped placeholder lives only
+  inside `fixtures/broken/`. In docs we write it broken
+  (`AKIA-IOSFODNN7-EXAMPLE`) so secret-scanners aren't tripped.

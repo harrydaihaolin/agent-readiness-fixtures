@@ -1,0 +1,10 @@
+{
+  "name": "monorepo-fixture",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "test": "echo \"workspace tests\" && exit 0",
+    "lint": "echo \"workspace lint\" && exit 0"
+  }
+}

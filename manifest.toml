@@ -1,0 +1,30 @@
+fixture_set_version = 1
+pack_version = "1.0.0"
+
+[[fixtures]]
+name = "good"
+path = "fixtures/good"
+expected_score_min = 90
+expected_score_max = 100
+description = "Healthy repo: AGENTS.md, Makefile, tests, CI, .env.example, lockfile."
+
+[[fixtures]]
+name = "noisy"
+path = "fixtures/noisy"
+expected_score_min = 60
+expected_score_max = 80
+description = "Passes basics but trips noise checks (large generated files, ambiguous names)."
+
+[[fixtures]]
+name = "broken"
+path = "fixtures/broken"
+expected_score_min = 20
+expected_score_max = 40
+description = "Multiple gaps: no README, no test command, hardcoded secret pattern."
+
+[[fixtures]]
+name = "monorepo"
+path = "fixtures/monorepo"
+expected_score_min = 70
+expected_score_max = 90
+description = "Turbo-style monorepo with packages/ for monorepo-tooling detection."

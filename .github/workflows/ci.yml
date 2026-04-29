@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  list:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.gen.outputs.matrix }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - id: gen
+        run: |
+          PAYLOAD=$(python tools/list_fixtures.py | python -c "import json,sys; data=json.load(sys.stdin); print(json.dumps({'fixture': [f['name'] for f in data['fixtures']]}))")
+          echo "matrix=$PAYLOAD" >> "$GITHUB_OUTPUT"
+
+  smoke:
+    needs: list
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.list.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          test -d "fixtures/${{ matrix.fixture }}"
+          ls "fixtures/${{ matrix.fixture }}"

@@ -21,9 +21,26 @@ divergence would only surface in production.
 | `fixtures/broken/` | Multiple gaps: no README, no test command, hardcoded secret pattern | 20–40 |
 | `fixtures/monorepo/` | Turbo-style monorepo for monorepo-tooling detection | 70–90 |
 | `fixtures/python_thin_gitignore/` | Regression guard for the v2.4.4 `gitignore_coverage` language-aware threshold fix. Primary contract: `safety.gitignore.covers_junk` must NOT fire (score 100). | 70–90 |
+| `fixtures/monorepo_pnpm/` | Workspace detection — Signal A (high). `pnpm-workspace.yaml` + two packages. | _not scored_ |
+| `fixtures/monorepo_bazel/` | Workspace detection — Signal A (high), build-system branch. Bazel `WORKSPACE` + two `BUILD` files. | _not scored_ |
+| `fixtures/monorepo_convention/` | Workspace detection — Signal B (medium). `apps/webapp/package.json` + `apps/worker/package.json`, no root declaration. | _not scored_ |
+| `fixtures/multi_repo_workspace/` | Workspace detection — step 2 (parent dir with N child `.git/`). Three sibling repos + AGENTS.md drift warning. Requires `materialize.sh` before use. | _not scored_ |
 
 `manifest.toml` lists the fixtures with metadata so tools can enumerate
 them deterministically.
+
+### Workspace-detection fixtures
+
+The last four fixtures above feed `agent-readiness`'s `workspace_detect`
+module (and the MCP server's `detect_workspace` / `scan_workspace`
+tools). They are **not scored** by the rules engine — the scanner
+either treats them as one repo (the three `monorepo_*` cases, by
+design) or refuses to score them at all (the `multi_repo_workspace`
+case, which exits non-zero with a `multi_repo_workspace` structured
+error). See each fixture's `README.md` for the expected classifier
+output and `multi_repo_workspace/AGENTS.md` for the materialise step
+(git refuses to track nested `.git/` directories, so the markers ship
+as sentinel files).
 
 ## Versioning
 

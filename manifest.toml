@@ -1,5 +1,5 @@
 fixture_set_version = 1
-pack_version = "1.0.0"
+pack_version = "1.1.0"
 
 [[fixtures]]
 name = "good"
@@ -28,3 +28,10 @@ path = "fixtures/monorepo"
 expected_score_min = 70
 expected_score_max = 90
 description = "Turbo-style monorepo with packages/ for monorepo-tooling detection."
+
+[[fixtures]]
+name = "python_thin_gitignore"
+path = "fixtures/python_thin_gitignore"
+expected_score_min = 70
+expected_score_max = 90
+description = "Regression guard for the v2.4.4 gitignore_coverage language_aware threshold fix. Python repo with a thin .gitignore that covers all 3 universal groups + 3 of 4 Python groups (missing only `coverage`). The primary contract: safety.gitignore.covers_junk MUST NOT fire (score 100, zero findings) on this fixture. Overall score sits in the 70-90 band because other rules (gitleaks config, lockfile_present, ci_feedback_loop) intentionally fire — this is a single-purpose regression guard, not a healthy-repo template."

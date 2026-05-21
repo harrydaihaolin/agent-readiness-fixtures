@@ -20,6 +20,7 @@ divergence would only surface in production.
 | `fixtures/noisy/` | Passes basics but trips noise checks (large generated files, ambiguous names) | 60–80 |
 | `fixtures/broken/` | Multiple gaps: no README, no test command, hardcoded secret pattern | 20–40 |
 | `fixtures/monorepo/` | Turbo-style monorepo for monorepo-tooling detection | 70–90 |
+| `fixtures/python_thin_gitignore/` | Regression guard for the v2.4.4 `gitignore_coverage` language-aware threshold fix. Primary contract: `safety.gitignore.covers_junk` must NOT fire (score 100). | 70–90 |
 
 `manifest.toml` lists the fixtures with metadata so tools can enumerate
 them deterministically.

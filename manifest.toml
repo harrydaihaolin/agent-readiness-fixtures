@@ -1,5 +1,5 @@
 fixture_set_version = 1
-pack_version = "1.1.0"
+pack_version = "1.2.0"
 
 [[fixtures]]
 name = "good"
@@ -35,3 +35,34 @@ path = "fixtures/python_thin_gitignore"
 expected_score_min = 70
 expected_score_max = 90
 description = "Regression guard for the v2.4.4 gitignore_coverage language_aware threshold fix. Python repo with a thin .gitignore that covers all 3 universal groups + 3 of 4 Python groups (missing only `coverage`). The primary contract: safety.gitignore.covers_junk MUST NOT fire (score 100, zero findings) on this fixture. Overall score sits in the 70-90 band because other rules (gitleaks config, lockfile_present, ci_feedback_loop) intentionally fire — this is a single-purpose regression guard, not a healthy-repo template."
+
+# --- workspace_detect fixtures (consumed by agent-readiness/tests/ ----
+# and agent-readiness-mcp/tests/, not by the rules-engine snapshot     --
+# tests). They have no expected_score_* values because the scanner    --
+# refuses to score them as-is: three of them classify as `monorepo`   --
+# (still scored as one repo in v1, but we keep them flagged so the    --
+# rules engine doesn't mix them into the normal score-band asserts).  --
+
+[[fixtures]]
+name = "monorepo_pnpm"
+path = "fixtures/monorepo_pnpm"
+description = "Workspace detection — Signal A high. pnpm-workspace.yaml + two packages/* with their own package.json. Classifier: monorepo / high. Scored-by: not run (workspace_detect tests only)."
+score_band = "not_scored"
+
+[[fixtures]]
+name = "monorepo_bazel"
+path = "fixtures/monorepo_bazel"
+description = "Workspace detection — Signal A high (build-system branch). Bazel WORKSPACE + two BUILD files. Classifier: monorepo / high. Scored-by: not run (workspace_detect tests only)."
+score_band = "not_scored"
+
+[[fixtures]]
+name = "monorepo_convention"
+path = "fixtures/monorepo_convention"
+description = "Workspace detection — Signal B medium. apps/webapp/package.json + apps/worker/package.json, no root declaration. Classifier: monorepo / medium. Distinguishes from monorepo_pnpm (which would also have package.json#workspaces or pnpm-workspace.yaml). Scored-by: not run (workspace_detect tests only)."
+score_band = "not_scored"
+
+[[fixtures]]
+name = "multi_repo_workspace"
+path = "fixtures/multi_repo_workspace"
+description = "Workspace detection — step 2 (parent dir with N child .git/ entries). Three sibling repos plus a root AGENTS.md that lists a fourth (deliberately missing on disk) to exercise the drift-warning path. Requires fixtures/multi_repo_workspace/materialize.sh before use — git refuses to track nested .git directories, so the .git/ markers ship as sentinel files. Classifier: multi_repo_workspace / high (post-materialise) with one missing_from_disk drift warning. Scored-by: not run (the scanner refuses to score multi_repo_workspace classifications)."
+score_band = "not_scored"

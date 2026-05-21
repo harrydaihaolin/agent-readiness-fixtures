@@ -1,0 +1,6 @@
+# Marker file. Promote this directory to a real git repo before running
+# workspace-detect integration tests against this fixture:
+#
+#     ./materialize.sh
+#
+# See MATERIALIZE.md at the fixture root for the full recipe.

@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "thin-pkg"
+version = "0.1.0"
+description = "Tiny Python project with a minimal-but-correct .gitignore — regression guard for safety.gitignore.covers_junk language-aware threshold."
+requires-python = ">=3.10"
+
+[project.scripts]
+thin-pkg = "thin_pkg.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,28 @@
+# Universals — required for every repo regardless of language.
+# (gitignore_coverage matcher: dotenv + ide_junk + logs.)
+.env
+.env.*
+!.env.example
+.idea/
+.vscode/
+.DS_Store
+*.swp
+*.log
+
+# Python build artefacts — 3 of 4 language groups for Python.
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# NB: intentionally NOT covering the `coverage` group (no `htmlcov/`,
+# `.coverage`, `.pytest_cache/`, or `coverage/` patterns).
+#
+# This is the exact post-v2.4.0 regression-protection case: under the
+# v2.4.3 matcher this `.gitignore` flipped from passing to firing
+# (`covers 6/7 groups; missing: coverage`). v2.4.4 restores the
+# pre-language-aware leniency: one language-group miss is tolerated
+# when the detected ecosystem has >= 3 language-specific groups in
+# scope. `gitignore.covers_junk` must NOT fire on this repo.
